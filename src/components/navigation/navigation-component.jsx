@@ -12,12 +12,10 @@ const Navigation = () => {
     // Since we need to check whether the currentUser is present (logged in) or not
     // if currentUser is null then it means logout and hence show sign in
     // if currentUser is present then it mean logged in and hence show signout
-    const { currentUser, setCurrentUser } = useContext(UserContext);
-    console.log("Current user: ", currentUser);
+    const { currentUser } = useContext(UserContext);
 
     const signOutHandler = async () => {
         await signOutAuthUsers();
-        setCurrentUser(null);
     };
 
     return (

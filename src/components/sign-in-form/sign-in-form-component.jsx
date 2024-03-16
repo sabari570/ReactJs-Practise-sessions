@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useContext, useState } from 'react';
 import { signInAuthUserWithEmailAndPassword, createUserDocumentFromAuth, signInWithGooglePopUp } from '../../utils/firebase/firbase-helper-functions';
 import FormInput from '../form-input/form-input-component';
 import '../sign-up-form/sign-up-form-styles.scss'
@@ -14,13 +14,12 @@ const SignInForm = () => {
     const [formFields, setFormFields] = useState(defaultFormFields);
     const { email, password } = formFields;
 
-    // Getting the current context value from the UserContext provider
-    // here we are taking tje setCurrentUser inorder to set the userContext while signing in
-    const { setCurrentUser } = useContext(UserContext);
-
     const resetFormFields = () => {
         setFormFields(defaultFormFields);
     }
+
+    const { currentUser } = useContext(UserContext);
+    console.log("Saved user: ", currentUser);
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -35,7 +34,7 @@ const SignInForm = () => {
 
         try {
             const { user } = await signInAuthUserWithEmailAndPassword(email, password);
-            setCurrentUser(user);
+            console.log({user});
             resetFormFields();
         } catch (error) {
             switch (error.code) {
@@ -49,7 +48,6 @@ const SignInForm = () => {
     const logGoogleUser = async () => {
         try {
             const response = await signInWithGooglePopUp();
-            setCurrentUser(response.user);
             await createUserDocumentFromAuth(response.user);
         } catch (error) {
             if (error.code === "auth/cancelled-popup-request") {
