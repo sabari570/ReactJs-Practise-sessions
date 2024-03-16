@@ -4,6 +4,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
+import { UserProvider } from './contexts/user-context';
 
 // This is how to use React router we wrap the entire App inside the BrowserRouter
 
@@ -13,7 +14,9 @@ root.render(
 
     {/* Wrapping the entire app inside the BrowserRouter for using the router component */}
     <BrowserRouter>
-      <App />
+      <UserProvider>
+        <App />
+      </UserProvider>
     </BrowserRouter>
   </React.StrictMode>
 );

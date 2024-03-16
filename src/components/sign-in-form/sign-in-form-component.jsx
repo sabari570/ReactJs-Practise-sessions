@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { signInAuthUserWithEmailAndPassword, createUserDocumentFromAuth, signInWithGooglePopUp } from '../../utils/firebase/firbase-helper-functions';
 import FormInput from '../form-input/form-input-component';
 import '../sign-up-form/sign-up-form-styles.scss'
 import Button from '../button/button-component';
+import { UserContext } from '../../contexts/user-context';
 
 const defaultFormFields = {
     email: '',
@@ -12,6 +13,10 @@ const defaultFormFields = {
 const SignInForm = () => {
     const [formFields, setFormFields] = useState(defaultFormFields);
     const { email, password } = formFields;
+
+    // Getting the current context value from the UserContext provider
+    // here we are taking tje setCurrentUser inorder to set the userContext while signing in
+    const { setCurrentUser } = useContext(UserContext);
 
     const resetFormFields = () => {
         setFormFields(defaultFormFields);
@@ -29,8 +34,8 @@ const SignInForm = () => {
         event.preventDefault();
 
         try {
-            const response = await signInAuthUserWithEmailAndPassword(email, password);
-            console.log({ response });
+            const { user } = await signInAuthUserWithEmailAndPassword(email, password);
+            setCurrentUser(user);
             resetFormFields();
         } catch (error) {
             switch (error.code) {
@@ -42,9 +47,16 @@ const SignInForm = () => {
     };
 
     const logGoogleUser = async () => {
-        const response = await signInWithGooglePopUp();
-        const userDoc = await createUserDocumentFromAuth(response.user);
-        console.log({ userDoc });
+        try {
+            const response = await signInWithGooglePopUp();
+            setCurrentUser(response.user);
+            await createUserDocumentFromAuth(response.user);
+        } catch (error) {
+            if (error.code === "auth/cancelled-popup-request") {
+                alert("Already in progress...");
+            }
+            console.log("Error while opening google signin: ", error);
+        }
     };
 
     return (
