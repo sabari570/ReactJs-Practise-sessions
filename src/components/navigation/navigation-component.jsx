@@ -5,6 +5,10 @@ import './navigation-styles.scss';
 import { useContext } from 'react';
 import { UserContext } from '../../contexts/user-context';
 import { signOutAuthUsers } from '../../utils/firebase/firbase-helper-functions';
+import CartIcon from '../cart-icon/cart-icon-component';
+import CartDropdown from '../cart-dropdown/cart-dropdown-component';
+import { CartContext } from '../../contexts/cart-context';
+
 
 const Navigation = () => {
 
@@ -13,10 +17,13 @@ const Navigation = () => {
     // if currentUser is null then it means logout and hence show sign in
     // if currentUser is present then it mean logged in and hence show signout
     const { currentUser } = useContext(UserContext);
+    const { isCartOpen } = useContext(CartContext);
 
     const signOutHandler = async () => {
         await signOutAuthUsers();
     };
+
+    
 
     return (
         // Fragment is used as a div for grouping up components
@@ -40,9 +47,13 @@ const Navigation = () => {
                                 SIGN IN
                             </Link>)
                     }
-
+                    < CartIcon />
                 </div>
             </div>
+
+            {
+                (isCartOpen && < CartDropdown />)
+            }
 
             {/* Outlet actually says where the nested routes component must be placed */}
             <Outlet />
