@@ -19,7 +19,7 @@ const App = () => {
       <Route path='/' element={<Navigation />}>   {/* This is the top level component */}
       {/* index says it is the home component that is the default path the parent has */}
         <Route index element={<Home />} />    {/* This is the sub level component */}
-        <Route path='shop' element= { < Shop /> } />
+        <Route path='shop/*' element= { < Shop /> } />  {/* Here the shop/* indicates that the shop route is nested and it will be defined inside the Shop component */}
 
         <Route path='sign-in' element= { < SignIn /> } />
 
