@@ -2,7 +2,7 @@ import { useContext, useState } from 'react';
 import { signInAuthUserWithEmailAndPassword, createUserDocumentFromAuth, signInWithGooglePopUp } from '../../utils/firebase/firbase-helper-functions';
 import FormInput from '../form-input/form-input-component';
 import '../sign-up-form/sign-up-form-styles.scss'
-import Button from '../button/button-component';
+import Button, { BUTTON_TYPE_CLASSES } from '../button/button-component';
 import { UserContext } from '../../contexts/user-context';
 
 const defaultFormFields = {
@@ -80,7 +80,7 @@ const SignInForm = () => {
 
                 <div className='buttons-container'>
                     < Button type='submit' children="Sign in" />
-                    < Button type='button' buttonType='google' children="Sign in with google" onClick={logGoogleUser} />
+                    < Button type='button' buttonType={BUTTON_TYPE_CLASSES.google} children="Sign in with google" onClick={logGoogleUser} />
                 </div>
             </form>
         </div>
