@@ -1,14 +1,14 @@
-import './category-item-styles.scss';
+import './directory-item-styles.scss';
 
-const CategoryItem = ({ category }) => {
+const DirectoryItem = ({ category }) => {
     return (
-        <div className='category-container'>
+        <div className='directory-item-container'>
             <div className='background-image' style={  // This is how we write style in react we can add the style for a specific property using an object inside the style property
                 {
                     backgroundImage: `url(${category.imageUrl})`
                 }
             } />
-            <div className='category-body-container'>
+            <div className='directory-item-body'>
                 <h2>{category.title}</h2>
                 <p>Shop now</p>
             </div>
@@ -16,4 +16,4 @@ const CategoryItem = ({ category }) => {
     );
 };
 
-export default CategoryItem;
+export default DirectoryItem;

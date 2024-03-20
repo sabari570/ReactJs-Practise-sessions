@@ -1,5 +1,5 @@
 import './category-directory.scss';
-import CategoryItem from '.././category-item/category-item-component.jsx';
+import DirectoryItem from '../directory-item/directory-item-component.jsx';
 
 
 const CategoryDirectory = () => {
@@ -37,7 +37,7 @@ const CategoryDirectory = () => {
             {
                 categories.map((category) => {
                     return (
-                        < CategoryItem key={category.id} category={category} />
+                        < DirectoryItem key={category.id} category={category} />
                     );
                 })
             }
