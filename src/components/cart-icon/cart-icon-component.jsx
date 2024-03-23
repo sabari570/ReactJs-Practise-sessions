@@ -1,7 +1,6 @@
-import './cart-icon-styles.scss';
-import { ReactComponent as ShoppingIcon } from '../../assets/shopping-bag.svg';
 import { useContext } from 'react';
 import { CartContext } from '../../contexts/cart-context';
+import { CartIconContainer, ItemCountContainer, ShoppingIconContainer } from './cart-icon-styles.jsx';
 
 const CartIcon = () => {
     const { isCartOpen, setIsCartOpen, cartCount } = useContext(CartContext);
@@ -10,10 +9,11 @@ const CartIcon = () => {
 
 
     return (
-        <div className='cart-icon-container' onClick={toogleHandler}>
-            < ShoppingIcon className='shopping-icon' />
-            <span className='item-count'>{cartCount}</span>
-        </div>
+        <CartIconContainer onClick={toogleHandler}>
+            {/* Here we are directly using the ShoppingIconContainer instead of calling the ShoppingIcon component seperately and then providing a classname to it and then desinging it */}
+            < ShoppingIconContainer />
+            <ItemCountContainer>{cartCount}</ItemCountContainer>
+        </CartIconContainer>
     );
 };
 

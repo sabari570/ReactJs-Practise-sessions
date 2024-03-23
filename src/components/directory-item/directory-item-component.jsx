@@ -1,18 +1,22 @@
-import './directory-item-styles.scss';
+import './directory-item-styles.jsx';
+import { BackgroundImage, DirectoryItemBody, DirectoryItemContainer } from './directory-item-styles.jsx';
+import { useNavigate } from 'react-router-dom';
 
 const DirectoryItem = ({ category }) => {
+
+    const navigate = useNavigate();
+    const onNavigateHandler = () => navigate(category.route);
     return (
-        <div className='directory-item-container'>
-            <div className='background-image' style={  // This is how we write style in react we can add the style for a specific property using an object inside the style property
-                {
-                    backgroundImage: `url(${category.imageUrl})`
-                }
-            } />
-            <div className='directory-item-body'>
+        <DirectoryItemContainer onClick={onNavigateHandler}>
+            <BackgroundImage
+            // This image url can be accessed by the corresponding styled components similar to that of props
+                imageUrl= {category.imageUrl}
+            />
+            <DirectoryItemBody>
                 <h2>{category.title}</h2>
                 <p>Shop now</p>
-            </div>
-        </div>
+            </DirectoryItemBody>
+        </DirectoryItemContainer>
     );
 };
 

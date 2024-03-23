@@ -1,7 +1,7 @@
 import { Fragment } from 'react';
-import { Link, Outlet } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 import { ReactComponent as CrwnLogo } from '../../assets/crown.svg';
-import './navigation-styles.scss';
+import { LogoContainer, NavLinksContainer, NavigationContainer, NavLink } from './navigation-styles.jsx';
 import { useContext } from 'react';
 import { UserContext } from '../../contexts/user-context';
 import { signOutAuthUsers } from '../../utils/firebase/firbase-helper-functions';
@@ -27,29 +27,32 @@ const Navigation = () => {
 
     return (
         // Fragment is used as a div for grouping up components
-        <Fragment>
-            <div className='navigation'>
-                <Link className='logo-container' to='/'>
+        <Fragment> 
+            {/* this is the portion where we use the styled components defined and replace the divs and the classnames */}
+            <NavigationContainer>
+                <LogoContainer to='/'>
                     < CrwnLogo className='logo' />
-                </Link>
-                <div className='nav-links-container'>
+                </LogoContainer>
+                <NavLinksContainer>
                     {/* Works similar to that of the anchor tag in html */}
-                    <Link className='nav-link' to='/shop'>
+                    <NavLink to='/shop'>
                         SHOP
-                    </Link>
+                    </NavLink>
                     {
                         currentUser ?
                             (
-                                <span className='nav-link' onClick={signOutHandler}>SIGN OUT</span>
+                                // This is how we can use a predined style for the Link component and give to another tag of html 
+                                // here in this case it is span
+                                <NavLink as='span' onClick={signOutHandler}>SIGN OUT</NavLink>
                             )
                             :
-                            (<Link className='nav-link' to='/sign-in' >
+                            (<NavLink to='/sign-in' >
                                 SIGN IN
-                            </Link>)
+                            </NavLink>)
                     }
                     < CartIcon />
-                </div>
-            </div>
+                </NavLinksContainer>
+            </NavigationContainer>
 
             {
                 (isCartOpen && < CartDropdown />)
