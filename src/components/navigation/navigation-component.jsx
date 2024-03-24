@@ -3,20 +3,23 @@ import { Outlet } from 'react-router-dom';
 import { ReactComponent as CrwnLogo } from '../../assets/crown.svg';
 import { LogoContainer, NavLinksContainer, NavigationContainer, NavLink } from './navigation-styles.jsx';
 import { useContext } from 'react';
-import { UserContext } from '../../contexts/user-context';
 import { signOutAuthUsers } from '../../utils/firebase/firbase-helper-functions';
 import CartIcon from '../cart-icon/cart-icon-component';
 import CartDropdown from '../cart-dropdown/cart-dropdown-component';
 import { CartContext } from '../../contexts/cart-context';
 
+// This is how we actually use the value inside the redux userReducers
+import { useSelector } from 'react-redux';
+import { selectCurrentUser } from '../../store/user/user-selector.js';
+
 
 const Navigation = () => {
 
-    // Here we are grabbing only the currentUser value from the userContext
-    // Since we need to check whether the currentUser is present (logged in) or not
-    // if currentUser is null then it means logout and hence show sign in
-    // if currentUser is present then it mean logged in and hence show signout
-    const { currentUser } = useContext(UserContext);
+    // this is how we actually access the state value of the userReducer using the useSelector
+    // we create a selectCurrentUser function inside the user-selector.js file
+    // and then that file return the state.user.currentUser value to the currentUser
+    const currentUser = useSelector((state) => selectCurrentUser(state));
+    console.log("Current user from useSelector: ", currentUser);
     const { isCartOpen } = useContext(CartContext);
 
     const signOutHandler = async () => {
