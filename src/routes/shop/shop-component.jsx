@@ -6,7 +6,7 @@ import './shop-styles.scss';
 import { Routes, Route } from "react-router-dom";
 import { getCategoriesAndDocuments } from '../../utils/firebase/firbase-helper-functions';
 import { useDispatch } from 'react-redux';
-import { setCategoriesMap } from '../../store/categories/category-action';
+import { setCategories } from '../../store/categories/category-action';
 
 const Shop = () => {
     const dispatch = useDispatch();
@@ -14,8 +14,9 @@ const Shop = () => {
     useEffect(
         () => {
             const getCategoriesMap = async () => {
-                const categoriesMap = await getCategoriesAndDocuments();
-                dispatch(setCategoriesMap(categoriesMap));
+                const categoriesArray = await getCategoriesAndDocuments();
+                console.log("Categories array: ", categoriesArray);
+                dispatch(setCategories(categoriesArray));
             };
             getCategoriesMap();
         },

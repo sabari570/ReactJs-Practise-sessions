@@ -132,17 +132,10 @@ export const getCategoriesAndDocuments = async () => {
     // }
     const q = query(collectionRef);
     const querySnapshot = await getDocs(q);
-    const categoryMap = querySnapshot.docs.reduce(
-        (acc, documentSnapshot) => {
-            const { title, items } = documentSnapshot.data();
-            acc[title.toLowerCase()] = items;
-            return acc;
-        },
-        {} // -> inital value of the accumulator
-    );
+    // this send out all the documentSnapshot data which is the object inside each of the documents in firebase
+    const categoriesArray = querySnapshot.docs.map((documentSnapshot) => documentSnapshot.data());
 
-    // Here categoriesMap will be an object since the accumulator is returned as an object
-    return categoryMap;
+    return categoriesArray;
 };
 
 export const auth = getAuth();
