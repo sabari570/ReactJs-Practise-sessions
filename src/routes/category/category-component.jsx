@@ -1,13 +1,14 @@
-import { Fragment, useContext, useEffect, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import './category-styles.scss';
 import { useParams } from 'react-router-dom';
-import { CategoriesContext } from '../../contexts/categories-context';
 import ProductCard from '../../components/product-card/product-card-component';
+import { useSelector } from 'react-redux';
+import { selectCatgoryMap } from '../../store/categories/category-selector';
 
 const Category = () => {
     // useParams is used to access the route parameters coming into this component
     const { category } = useParams();
-    const { categoriesMap } = useContext(CategoriesContext);
+    const categoriesMap = useSelector(selectCatgoryMap);
     const [products, setProducts] = useState(categoriesMap[category]);
 
     // This useEffect says that only when there is a change in the category (that is the route parameter)
