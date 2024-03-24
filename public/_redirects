@@ -1,1 +1,6 @@
+/* This is written because in netlify if the user goes into nested routes and clicks */
+/* The page doesnt reload it says page with this end point not found */
+/* Inorder to solve that issue we create a _redirects file inside public folder */
+/* and say if there is any user with the endpoint /* then netlify redirects and renders the  */
+/* index.html file with a status code of 2000 */
 /* /index.html 200
