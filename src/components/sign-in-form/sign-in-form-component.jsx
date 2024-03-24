@@ -1,9 +1,10 @@
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import { signInAuthUserWithEmailAndPassword, createUserDocumentFromAuth, signInWithGooglePopUp } from '../../utils/firebase/firbase-helper-functions';
 import FormInput from '../form-input/form-input-component';
 import '../sign-up-form/sign-up-form-styles.scss'
 import Button, { BUTTON_TYPE_CLASSES } from '../button/button-component';
-import { UserContext } from '../../contexts/user-context';
+import { useSelector } from 'react-redux';
+import { selectCurrentUser } from '../../store/user/user-selector';
 
 const defaultFormFields = {
     email: '',
@@ -18,7 +19,7 @@ const SignInForm = () => {
         setFormFields(defaultFormFields);
     }
 
-    const { currentUser } = useContext(UserContext);
+    const currentUser = useSelector(selectCurrentUser);
     console.log("Saved user: ", currentUser);
 
     const handleChange = (event) => {
