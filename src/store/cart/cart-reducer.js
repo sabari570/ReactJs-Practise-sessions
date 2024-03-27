@@ -9,7 +9,7 @@ const INITAL_STATE = {
 export const cartReducer = (state = INITAL_STATE, action = {}) => {
     const { type, payload } = action;
     switch(type){
-        case cartReducerActionTypes.ADD_TO_CART: 
+        case cartReducerActionTypes.SET_CART_ITEMS: 
             return {
                 ...state, 
                 cartItems: payload,

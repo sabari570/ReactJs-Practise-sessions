@@ -2,15 +2,14 @@ import { Fragment } from 'react';
 import { Outlet } from 'react-router-dom';
 import { ReactComponent as CrwnLogo } from '../../assets/crown.svg';
 import { LogoContainer, NavLinksContainer, NavigationContainer, NavLink } from './navigation-styles.jsx';
-import { useContext } from 'react';
 import { signOutAuthUsers } from '../../utils/firebase/firbase-helper-functions';
 import CartIcon from '../cart-icon/cart-icon-component';
 import CartDropdown from '../cart-dropdown/cart-dropdown-component';
-import { CartContext } from '../../contexts/cart-context';
 
 // This is how we actually use the value inside the redux userReducers
 import { useSelector } from 'react-redux';
 import { selectCurrentUser } from '../../store/user/user-selector.js';
+import { selectIsCartOpen } from '../../store/cart/cart-selector.js';
 
 
 const Navigation = () => {
@@ -20,7 +19,7 @@ const Navigation = () => {
     // and then that file return the state.user.currentUser value to the currentUser
     const currentUser = useSelector((state) => selectCurrentUser(state));
     console.log("Current user from useSelector: ", currentUser);
-    const { isCartOpen } = useContext(CartContext);
+    const isCartOpen = useSelector(selectIsCartOpen);
 
     const signOutHandler = async () => {
         await signOutAuthUsers();

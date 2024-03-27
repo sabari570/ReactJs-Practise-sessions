@@ -44,21 +44,21 @@ const clearCartItem = (cartItems, cartItemToBeRemoved) => {
 };
 
 // This function is to add the product to cart
-const addItemToCart = (cartItems, productToAdd) => {
+export const addItemToCart = (cartItems, productToAdd) => {
     const newCartItems = addCartItem(cartItems, productToAdd);
-    updateCartItemsReducer(newCartItems);
+    return createAction(cartReducerActionTypes.SET_CART_ITEMS, newCartItems);
 };
 
 // This function is to decrease the product added to cart
-const removeFromCart = (cartItems, cartItemToBeRemoved) => {
+export const removeFromCart = (cartItems, cartItemToBeRemoved) => {
     const newCartItems = removeCartItem(cartItems, cartItemToBeRemoved);
-    updateCartItemsReducer(newCartItems);
+    return createAction(cartReducerActionTypes.SET_CART_ITEMS, newCartItems);
 };
 
 // This function is to clear the item from the cart
-const clearItemFromCart = (cartItems, cartItemToBeRemoved) => {
+export const clearItemFromCart = (cartItems, cartItemToBeRemoved) => {
     const newCartItems = clearCartItem(cartItems, cartItemToBeRemoved);
-    updateCartItemsReducer(newCartItems);
+    return createAction(cartReducerActionTypes.SET_CART_ITEMS, newCartItems);
 };
 
 // Here we are retuning the action for each set functions so that its sets the universal object
