@@ -37,3 +37,8 @@ export const selectCatgoryMap = createSelector(
             {} // -> inital value of the accumulator
         )
 );
+
+export const selectCategoriesIsLoading = createSelector(
+    [selectCategoryReducer],
+    (category) => category.isLoading,
+);
