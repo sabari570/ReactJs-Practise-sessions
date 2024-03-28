@@ -27,7 +27,10 @@ const persistedReducer = persistReducer(persistsConfig, rootReducer);
 
 // Whenever you dispatch an action it first hits the middleWares and only then it goes to the rootReducer
 // to carry out the other purposes
-const middleWares = [logger];
+// This process.env.NODE_ENV code is written to say that we use the logger middleware only in development mode and not in production
+// the .filter(Boolean) is applied so that if the condition inside the list returns true it keeps the logger on the list
+// if it is false instead of returing false back to middleWares it returns an empty list
+const middleWares = [process.env.NODE_ENV !== 'production' && logger].filter(Boolean);  // if true -> [logger], if false -> []
 
 const composedEnhancers = compose(applyMiddleware(...middleWares));
 
