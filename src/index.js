@@ -7,7 +7,10 @@ import { BrowserRouter } from "react-router-dom";
 
 // Used for implementing and providing redux state management for the whole app
 import { Provider } from "react-redux";
-import { store } from "./store/store";
+import { persistor, store } from "./store/store";
+
+// This PersistGate allows us to use the persistStore inside our app, we wrap our app inside the PersistGate
+import { PersistGate } from "redux-persist/integration/react";
 
 // This is how to use React router we wrap the entire App inside the BrowserRouter
 
@@ -15,9 +18,13 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
+      {/* We wrap the app inside PersistGate and pass in the persistor parameter we created inside our store */}
+      {/* we have a loading parameter inside which says while loading the data from the local storage what should be displayed */}
+      <PersistGate loading={null} persistor={persistor}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </PersistGate>
     </Provider>
   </React.StrictMode>
 );
