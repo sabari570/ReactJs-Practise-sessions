@@ -1,9 +1,8 @@
-// This is the file where actually we have the core store of redux
-// it is here where we actually createStore for redux and pass the rootReducer into
-
-import { compose, legacy_createStore as createStore, applyMiddleware } from "redux";
-import logger from "redux-logger";
+// In this branch we actually learn redux-toolkit and its configuartion
+// it is pretty similar to redux-state-management but reduces many of the boiler plate code and makes it easies for us
+import { configureStore } from "@reduxjs/toolkit";
 import { rootReducer } from "./root-reducer";
+import logger from "redux-logger";
 
 // This is used for persisting that mean saving the state object so that the app persists the state of the object
 // even if we relaod the web app
@@ -25,18 +24,23 @@ const persistsConfig = {
 // It takes in the persistConfig and the rootReducer
 const persistedReducer = persistReducer(persistsConfig, rootReducer);
 
-// Whenever you dispatch an action it first hits the middleWares and only then it goes to the rootReducer
-// to carry out the other purposes
-// This process.env.NODE_ENV code is written to say that we use the logger middleware only in development mode and not in production
-// the .filter(Boolean) is applied so that if the condition inside the list returns true it keeps the logger on the list
-// if it is false instead of returing false back to middleWares it returns an empty list
-const middleWares = [process.env.NODE_ENV !== 'production' && logger].filter(Boolean);  // if true -> [logger], if false -> []
+const middleWares = [process.env.NODE_ENV !== 'production' && logger].filter(Boolean);
 
-const composedEnhancers = compose(applyMiddleware(...middleWares));
+// There are 3 middlewares that are already present in the redux-toolkit inside configureStore
+// 1. thunk middleware
+// 2. non-serializable check middleware
+// 3. immutabilty check middleware -> which means we cant change the value of the state variables
 
-// Syntax of the createStore-> createStore( <root_reducer>, <additional default states (mostly used for testing)>, <middleware for the logger> )
-// pass in the persistedReducer in the place of rootReducer
-export const store = createStore(persistedReducer, undefined, composedEnhancers);
+export const store = configureStore({
+    reducer: persistedReducer,
+    // configureStore already have some pre-defined middlewares that consists of thunk and some non-serializable checks
+    // this is how we actually solve the problem of non-serializable check middleware 
+    // we actually remove the non-serializable check middleware by setting (serializableCheck to false) from the configureStore and keep all other pre-defined middleware
+    // and also add our own logger middleware we created
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware({
+        serializableCheck: false,
+    }).concat(middleWares),
+});
 
 // export the persistStore by passing in the store
 export const persistor = persistStore(store);

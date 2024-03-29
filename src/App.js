@@ -7,7 +7,7 @@ import Shop from './routes/shop/shop-component';
 import Checkout from './routes/checkout/checkout-component';
 import { useEffect } from 'react';
 
-import { setCurrentUser } from './store/user/user-action';
+import { setCurrentUser } from './store/user/user-reducer';
 import { useDispatch } from 'react-redux';
 import { onAuthStateChangedListener } from './utils/firebase/firbase-helper-functions';
 
@@ -25,8 +25,7 @@ const App = () => {
       const unsubscribe = onAuthStateChangedListener((user) => {
         console.log("User status: ", user);
 
-        // since we are not dipatching in the action setCurrentUser like we did in reducers
-        // this is how we dispatch the actions in react-redux
+        // here we are dispatching the setCurrentUser action inside the user-reducer
         dispatch(setCurrentUser(user));
       });
       return unsubscribe; // returns whenever the component is unmounted that is when the web app is closed
