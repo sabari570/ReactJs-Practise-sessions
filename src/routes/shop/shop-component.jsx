@@ -6,7 +6,7 @@ import './shop-styles.scss';
 import { Routes, Route } from "react-router-dom";
 import { getCategoriesAndDocuments } from '../../utils/firebase/firbase-helper-functions';
 import { useDispatch } from 'react-redux';
-import { setCategories } from '../../store/categories/category-action';
+import { setCategories } from '../../store/categories/category-reducer';
 
 const Shop = () => {
     const dispatch = useDispatch();
